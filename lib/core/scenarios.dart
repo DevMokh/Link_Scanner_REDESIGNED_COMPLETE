@@ -213,7 +213,7 @@ const List<TrainLevel> kLevels = <TrainLevel>[
   // -------------------------------------------------------------------
   TrainLevel(
     id: 'l3',
-    title: 'المرحلة 3: كوبرا',
+    title: 'المرحلة 3: خبير',
     subtitle: 'تفاصيل دقيقة يفوّتها معظم الناس',
     icon: Icons.workspace_premium_rounded,
     scenarios: <Scenario>[
