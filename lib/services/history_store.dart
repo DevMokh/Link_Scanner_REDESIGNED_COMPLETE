@@ -12,7 +12,7 @@ class HistoryStore extends ChangeNotifier {
 
   static final HistoryStore instance = HistoryStore._();
   static const String _key = 'cobra.history.v1';
-  static const int _max = 100;
+  static const int maxItems = 100;
 
   final List<HistoryItem> _items = <HistoryItem>[];
   List<HistoryItem> get items => List<HistoryItem>.unmodifiable(_items);
@@ -45,8 +45,8 @@ class HistoryStore extends ChangeNotifier {
 
   Future<void> add(HistoryItem item) async {
     _items.insert(0, item);
-    if (_items.length > _max) {
-      _items.removeRange(_max, _items.length);
+    if (_items.length > maxItems) {
+      _items.removeRange(maxItems, _items.length);
     }
     notifyListeners();
     await _save();
