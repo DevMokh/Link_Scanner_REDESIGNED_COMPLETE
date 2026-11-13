@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/theme.dart';
 import '../services/strings.dart';
-import '../widgets/scale_header.dart';
+import '../widgets/app_header.dart';
 
 class _Lesson {
   const _Lesson(this.icon, this.title, this.points);
@@ -78,7 +78,7 @@ class LearnScreen extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        ScaleHeader(
+        AppHeader(
           title: tr(S.learnTitle),
           subtitle: tr(S.learnSubtitle),
           icon: Icons.school_rounded,
@@ -99,11 +99,11 @@ class LearnScreen extends StatelessWidget {
                     child: ExpansionTile(
                       shape: const Border(),
                       collapsedShape: const Border(),
-                      iconColor: C.emerald,
+                      iconColor: C.accent,
                       collapsedIconColor: C.muted,
                       tilePadding: const EdgeInsets.symmetric(horizontal: 14),
                       childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 14),
-                      leading: Icon(l.icon, color: C.emerald),
+                      leading: Icon(l.icon, color: C.accent),
                       title: Text(
                         l.title,
                         style: const TextStyle(
@@ -121,7 +121,7 @@ class LearnScreen extends StatelessWidget {
                               children: [
                                 const Padding(
                                   padding: EdgeInsets.only(top: 6),
-                                  child: Icon(Icons.circle, size: 6, color: C.emerald),
+                                  child: Icon(Icons.circle, size: 6, color: C.accent),
                                 ),
                                 const SizedBox(width: 10),
                                 Expanded(
