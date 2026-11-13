@@ -8,7 +8,7 @@ import '../services/inbox.dart';
 import '../services/message_analyzer.dart';
 import '../services/strings.dart';
 import '../widgets/common.dart';
-import '../widgets/scale_header.dart';
+import '../widgets/app_header.dart';
 import '../widgets/scan_report.dart';
 import 'image_scan_screen.dart';
 
@@ -142,11 +142,11 @@ class _MessageScanScreenState extends State<MessageScanScreen> {
             children: [
               Expanded(
                 flex: 3,
-                child: FilledButton.icon(
+                child: PrimaryButton(
                   onPressed: _scan,
-                  style: filledButtonStyle(),
-                  icon: const Icon(Icons.mark_email_unread_rounded),
-                  label: const Text('حلّل الرسالة'),
+                  icon: Icons.mark_email_unread_rounded,
+                  label: 'حلّل الرسالة',
+                  height: 50,
                 ),
               ),
               const SizedBox(width: 10),
@@ -230,7 +230,7 @@ class _MessageScanScreenState extends State<MessageScanScreen> {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        ScaleHeader(
+        AppHeader(
           title: tr(S.msgTitle),
           subtitle: tr(S.msgSubtitle),
           icon: Icons.mark_email_read_rounded,
