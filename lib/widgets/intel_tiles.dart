@@ -12,7 +12,7 @@ class IntelTile extends StatelessWidget {
   Color get _color {
     switch (result.status) {
       case IntelStatus.clean:
-        return C.emerald;
+        return C.green;
       case IntelStatus.hit:
         return C.red;
       case IntelStatus.info:
@@ -107,12 +107,12 @@ class ChainView extends StatelessWidget {
                   height: 22,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: alpha(C.emerald, 0.15),
+                    color: alpha(C.accent, 0.15),
                     shape: BoxShape.circle,
                   ),
                   child: Text(
                     '${i + 1}',
-                    style: const TextStyle(color: C.emerald, fontSize: 11),
+                    style: const TextStyle(color: C.accent, fontSize: 11),
                   ),
                 ),
                 const SizedBox(width: 8),
