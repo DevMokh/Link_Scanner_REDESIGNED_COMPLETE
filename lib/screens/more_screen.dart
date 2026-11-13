@@ -5,7 +5,7 @@ import '../services/settings_store.dart';
 import '../services/strings.dart';
 import '../widgets/common.dart';
 import '../widgets/intel_settings.dart';
-import '../widgets/scale_header.dart';
+import '../widgets/app_header.dart';
 import '../widgets/sub_page.dart';
 import '../widgets/tools.dart';
 import '../widgets/tools_extra.dart';
@@ -44,6 +44,29 @@ void openSettings(BuildContext context) {
   );
 }
 
+/// فحص المرسل (من القائمة الجانبية ومن تبويب المزيد).
+void openSenderTool(BuildContext context) {
+  _openTool(
+    context,
+    _t('فحص المرسل', 'Check a sender'),
+    _t('تحقق من هوية المرسل', 'Verify who sent it'),
+    Icons.alternate_email_rounded,
+    const SenderTool(),
+  );
+}
+
+/// الفحص المجمّع للروابط (من القائمة الجانبية ومن تبويب المزيد).
+void openBatchTool(BuildContext context) {
+  _openTool(
+    context,
+    _t('فحص مجمّع', 'Batch scan'),
+    _t('الصق عدة روابط وافحصها دفعة واحدة',
+        'Paste several links and scan them together'),
+    Icons.playlist_add_check_rounded,
+    const BatchTool(),
+  );
+}
+
 void _openTool(
   BuildContext context,
   String title,
@@ -74,7 +97,7 @@ class MoreScreen extends StatelessWidget {
     return ListView(
       padding: EdgeInsets.zero,
       children: [
-        ScaleHeader(
+        AppHeader(
           title: tr(S.moreTitle),
           subtitle: tr(S.moreSubtitle),
           icon: Icons.apps_rounded,
@@ -104,27 +127,14 @@ class MoreScreen extends StatelessWidget {
                 title: _t('فحص المرسل', 'Check a sender'),
                 subtitle: _t('إيميل أو رقم أو اسم مرسل مريب؟',
                     'Suspicious email, number or sender name?'),
-                onTap: () => _openTool(
-                  context,
-                  _t('فحص المرسل', 'Check a sender'),
-                  _t('تحقق من هوية المرسل', 'Verify who sent it'),
-                  Icons.alternate_email_rounded,
-                  const SenderTool(),
-                ),
+                onTap: () => openSenderTool(context),
               ),
               _MoreItem(
                 icon: Icons.playlist_add_check_rounded,
                 title: _t('فحص مجمّع', 'Batch scan'),
                 subtitle: _t('افحص عدة روابط مرة واحدة',
                     'Scan several links at once'),
-                onTap: () => _openTool(
-                  context,
-                  _t('فحص مجمّع', 'Batch scan'),
-                  _t('الصق عدة روابط وافحصها دفعة واحدة',
-                      'Paste several links and scan them together'),
-                  Icons.playlist_add_check_rounded,
-                  const BatchTool(),
-                ),
+                onTap: () => openBatchTool(context),
               ),
               const SizedBox(height: 10),
               SectionTitle(_t('تعلّم وتدرّب', 'Learn and train')),
@@ -235,21 +245,18 @@ class _MoreItem extends StatelessWidget {
         onTap: onTap,
         child: Container(
           padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: C.surface,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: C.line),
-          ),
+          decoration: glassDecoration(radius: 16),
           child: Row(
             children: [
               Container(
                 width: 42,
                 height: 42,
                 decoration: BoxDecoration(
-                  color: alpha(C.emerald, 0.14),
+                  color: alpha(C.accent, 0.14),
                   borderRadius: BorderRadius.circular(13),
+                  border: Border.all(color: alpha(C.accent, 0.4)),
                 ),
-                child: Icon(icon, color: C.emerald, size: 22),
+                child: Icon(icon, color: C.accent, size: 22),
               ),
               const SizedBox(width: 12),
               Expanded(
