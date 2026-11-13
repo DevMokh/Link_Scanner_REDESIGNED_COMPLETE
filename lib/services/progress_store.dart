@@ -45,7 +45,7 @@ class ProgressStore extends ChangeNotifier {
     if (r < 0.25) return 'متدرّب';
     if (r < 0.55) return 'حارس';
     if (r < 0.85) return 'صيّاد';
-    return 'كوبرا';
+    return 'خبير';
   }
 
   Future<void> record(String id, int correct) async {
