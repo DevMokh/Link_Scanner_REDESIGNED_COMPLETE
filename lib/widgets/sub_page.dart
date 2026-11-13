@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/theme.dart';
-import 'scale_header.dart';
+import 'app_header.dart';
 
 /// صفحة فرعية بزر إغلاق عائم (للشاشات اللي ليها ترويسة كاملة بالفعل).
 class BackPage extends StatelessWidget {
@@ -51,7 +51,7 @@ class ToolPage extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          ScaleHeader(title: title, subtitle: subtitle, icon: icon),
+          AppHeader(title: title, subtitle: subtitle, icon: icon),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 28),
             child: Column(
