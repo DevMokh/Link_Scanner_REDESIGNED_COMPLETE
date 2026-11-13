@@ -142,7 +142,7 @@ class LinkExpander {
 
     final client = NetGuard.pinnedClient(
       connectTimeout: _timeout,
-      userAgent: 'Mozilla/5.0 (Linux; Android 14) CobraShield/1.0',
+      userAgent: 'Mozilla/5.0 (Linux; Android 14) LinkScanner/1.0',
       context: securityContextForTesting,
       resolver: resolverForTesting,
       lookupTimeout: () => _slice(clock),
