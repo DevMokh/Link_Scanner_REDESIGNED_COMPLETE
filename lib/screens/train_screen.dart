@@ -5,7 +5,7 @@ import '../core/theme.dart';
 import '../services/progress_store.dart';
 import '../services/strings.dart';
 import '../widgets/common.dart';
-import '../widgets/scale_header.dart';
+import '../widgets/app_header.dart';
 import 'learn_screen.dart';
 import 'quiz_page.dart';
 
@@ -19,8 +19,8 @@ class TrainScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: C.surface,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: alpha(C.emerald, 0.4)),
-        boxShadow: [BoxShadow(color: alpha(C.emerald, 0.08), blurRadius: 24)],
+        border: Border.all(color: alpha(C.accent, 0.4)),
+        boxShadow: [BoxShadow(color: alpha(C.accent, 0.08), blurRadius: 24)],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,10 +31,10 @@ class TrainScreen extends StatelessWidget {
                 width: 46,
                 height: 46,
                 decoration: BoxDecoration(
-                  color: alpha(C.emerald, 0.15),
+                  color: alpha(C.accent, 0.15),
                   borderRadius: BorderRadius.circular(14),
                 ),
-                child: const Icon(Icons.military_tech_rounded, color: C.emerald),
+                child: const Icon(Icons.military_tech_rounded, color: C.accent),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -59,7 +59,7 @@ class TrainScreen extends StatelessWidget {
               Text(
                 '${ps.xp} / ${ps.maxXp} XP',
                 style: const TextStyle(
-                  color: C.emerald,
+                  color: C.accent,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -71,7 +71,7 @@ class TrainScreen extends StatelessWidget {
             child: LinearProgressIndicator(
               value: ratio,
               minHeight: 8,
-              color: C.emerald,
+              color: C.accent,
               backgroundColor: C.surface2,
             ),
           ),
@@ -85,7 +85,7 @@ class TrainScreen extends StatelessWidget {
     final unlocked = ps.unlocked(i);
     final best = ps.best(level.id);
     final stars = starsFor(best, level.scenarios.length);
-    final c = unlocked ? C.emerald : C.muted;
+    final c = unlocked ? C.accent : C.muted;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
@@ -106,7 +106,7 @@ class TrainScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: C.surface,
             borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: unlocked ? alpha(C.emerald, 0.35) : C.line),
+            border: Border.all(color: unlocked ? alpha(C.accent, 0.35) : C.line),
           ),
           child: Row(
             children: [
@@ -178,7 +178,7 @@ class TrainScreen extends StatelessWidget {
         return ListView(
           padding: EdgeInsets.zero,
           children: [
-            ScaleHeader(
+            AppHeader(
               title: tr(S.trainTitle),
               subtitle: tr(S.trainSubtitle),
               icon: Icons.sports_esports_rounded,
