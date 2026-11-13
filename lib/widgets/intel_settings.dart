@@ -101,7 +101,7 @@ class _IntelSettingsPanelState extends State<IntelSettingsPanel> {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  const Icon(Icons.shield_moon_rounded, color: C.emerald, size: 22),
+                  const Icon(Icons.shield_moon_rounded, color: C.accent, size: 22),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Column(
