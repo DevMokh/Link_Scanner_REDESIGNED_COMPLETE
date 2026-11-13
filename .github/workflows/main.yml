@@ -246,6 +246,10 @@ jobs:
           for d in android_overlay/res/mipmap-*; do
             cp -r "$d" "$APP/res/"
           done
+          # شاشة البداية الأصلية (قبل ما Flutter يشتغل): خلفية سوداء + أيقونة التطبيق بدل الأبيض
+          mkdir -p "$APP/res/drawable" "$APP/res/drawable-v21"
+          cp android_overlay/res/drawable/launch_background.xml "$APP/res/drawable/launch_background.xml"
+          cp android_overlay/res/drawable/launch_background.xml "$APP/res/drawable-v21/launch_background.xml"
           echo "--- manifest ---"
           head -20 "$APP/AndroidManifest.xml"
           find android/app/src/main -name 'MainActivity.*'
