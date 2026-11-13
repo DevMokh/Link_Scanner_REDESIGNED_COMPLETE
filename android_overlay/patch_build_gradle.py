@@ -136,7 +136,7 @@ def main() -> int:
     if "tesseract4android" not in src:
         if path.suffix == ".kts":
             extra = (
-                "\n// Cobra Shield: قراءة النص العربي من الصور (Tesseract) على الجهاز\n"
+                "\n// Link Scanner: قراءة النص العربي من الصور (Tesseract) على الجهاز\n"
                 "repositories {\n"
                 "    maven { url = uri(\"https://jitpack.io\") }\n"
                 "}\n\n"
@@ -146,7 +146,7 @@ def main() -> int:
             )
         else:
             extra = (
-                "\n// Cobra Shield: قراءة النص العربي من الصور (Tesseract) على الجهاز\n"
+                "\n// Link Scanner: قراءة النص العربي من الصور (Tesseract) على الجهاز\n"
                 "repositories {\n"
                 "    maven { url \"https://jitpack.io\" }\n"
                 "}\n\n"
