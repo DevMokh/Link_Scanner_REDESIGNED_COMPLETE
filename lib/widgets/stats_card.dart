@@ -68,7 +68,7 @@ class StatsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.shield_moon_rounded, color: C.emerald, size: 22),
+              const Icon(Icons.shield_moon_rounded, color: C.accent, size: 22),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -89,7 +89,7 @@ class StatsCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             child: Row(
               children: [
-                bar(C.emerald, low),
+                bar(C.green, low),
                 bar(C.amber, mid),
                 bar(C.red, high),
               ],
@@ -98,7 +98,7 @@ class StatsCard extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              stat('نظيف', low, C.emerald),
+              stat('نظيف', low, C.green),
               stat('مشبوه', mid, C.amber),
               stat('خطير', high, C.red),
             ],
