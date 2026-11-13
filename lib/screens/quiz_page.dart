@@ -102,7 +102,7 @@ class _QuizPageState extends State<QuizPage> {
             Text(
               'صحيح: $_correct',
               style: const TextStyle(
-                color: C.emerald,
+                color: C.accent,
                 fontWeight: FontWeight.w700,
                 fontSize: 13,
               ),
@@ -115,7 +115,7 @@ class _QuizPageState extends State<QuizPage> {
           child: LinearProgressIndicator(
             value: (_i + (answered ? 1 : 0)) / total,
             minHeight: 6,
-            color: C.emerald,
+            color: C.accent,
             backgroundColor: C.surface2,
           ),
         ),
@@ -126,12 +126,12 @@ class _QuizPageState extends State<QuizPage> {
             children: [
               Row(
                 children: [
-                  Icon(sc.channel.icon, color: C.emerald, size: 20),
+                  Icon(sc.channel.icon, color: C.accent, size: 20),
                   const SizedBox(width: 8),
                   Text(
                     sc.channel.label,
                     style: const TextStyle(
-                      color: C.emerald,
+                      color: C.accent,
                       fontWeight: FontWeight.w700,
                       fontSize: 13,
                     ),
@@ -197,12 +197,12 @@ class _QuizPageState extends State<QuizPage> {
                 child: FilledButton.icon(
                   onPressed: () => _answer(false),
                   style: FilledButton.styleFrom(
-                    backgroundColor: alpha(C.emerald, 0.16),
-                    foregroundColor: C.emerald,
+                    backgroundColor: alpha(C.accent, 0.16),
+                    foregroundColor: C.accent,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
-                      side: BorderSide(color: alpha(C.emerald, 0.5)),
+                      side: BorderSide(color: alpha(C.accent, 0.5)),
                     ),
                   ),
                   icon: const Icon(Icons.verified_rounded),
@@ -219,7 +219,7 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget _feedback(Scenario sc) {
     final ok = _picked == sc.isScam;
-    final c = ok ? C.emerald : C.red;
+    final c = ok ? C.green : C.red;
     final last = _i + 1 >= _level.scenarios.length;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -311,7 +311,7 @@ class _QuizPageState extends State<QuizPage> {
     final stars = starsFor(_correct, total);
     final passed = _correct >= kPassMark;
     final hasNext = _levelIndex + 1 < kLevels.length;
-    final c = passed ? C.emerald : C.amber;
+    final c = passed ? C.green : C.amber;
 
     return ListView(
       padding: const EdgeInsets.all(20),
