@@ -286,7 +286,7 @@ class OnlineIntel {
     try {
       final body = jsonEncode(<String, dynamic>{
         'client': <String, String>{
-          'clientId': 'cobra-shield',
+          'clientId': 'link-scanner',
           'clientVersion': kAppVersion,
         },
         'threatInfo': <String, dynamic>{
