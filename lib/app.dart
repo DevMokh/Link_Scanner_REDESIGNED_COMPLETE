@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'core/app_info.dart';
 import 'core/theme.dart';
 import 'screens/home_shell.dart';
 
-class CobraShieldApp extends StatelessWidget {
-  const CobraShieldApp({super.key});
+class LinkScannerApp extends StatelessWidget {
+  const LinkScannerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = buildTheme();
     return MaterialApp(
-      title: 'كاشف الروابط | Link Scanner',
+      title: kAppName,
       debugShowCheckedModeBanner: false,
       theme: theme,
       darkTheme: theme,
