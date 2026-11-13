@@ -15,7 +15,7 @@ Widget _title(IconData icon, String title, String sub) {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: C.emerald, size: 22),
+        Icon(icon, color: C.accent, size: 22),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -113,11 +113,11 @@ class _SenderToolState extends State<SenderTool> {
                       label: Text(c.label),
                       selected: _claim == c,
                       onSelected: (_) => setState(() => _claim = c),
-                      selectedColor: alpha(C.emerald, 0.22),
+                      selectedColor: alpha(C.accent, 0.22),
                       backgroundColor: C.surface2,
                       side: const BorderSide(color: C.line),
                       labelStyle: TextStyle(
-                        color: _claim == c ? C.emerald : C.muted,
+                        color: _claim == c ? C.accent : C.muted,
                         fontSize: 12.5,
                       ),
                     ),
@@ -138,7 +138,7 @@ class _SenderToolState extends State<SenderTool> {
           Panel(
             child: Row(
               children: [
-                const Icon(Icons.phone_android_rounded, color: C.emerald),
+                const Icon(Icons.phone_android_rounded, color: C.accent),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
@@ -244,7 +244,7 @@ class _BatchToolState extends State<BatchTool> {
   }
 
   String _report() {
-    final b = StringBuffer('تقرير فحص مجمّع - Link Scanner\n\n');
+    final b = StringBuffer('تقرير فحص مجمّع - كاشف الروابط\n\n');
     for (final r in _rows) {
       if (r.result.hasScore) {
         b.writeln('${r.result.effectiveScore}/100 - ${r.result.headline} - ${r.input}');
@@ -429,7 +429,7 @@ class _BatchToolState extends State<BatchTool> {
               children: [
                 _count('خطير', bad, C.red),
                 _count('مشبوه', mid, C.amber),
-                _count('بلا مؤشرات', ok, C.emerald),
+                _count('بلا مؤشرات', ok, C.green),
                 if (unchecked > 0) _count('غير مفحوص', unchecked, C.muted),
               ],
             ),
