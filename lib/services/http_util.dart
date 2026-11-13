@@ -70,7 +70,7 @@ Future<HttpResult> httpRequest(
 
   final client = NetGuard.pinnedClient(
     connectTimeout: timeout,
-    userAgent: 'CobraShield/1.2',
+    userAgent: 'LinkScanner/1.2',
     context: httpSecurityContextForTesting,
     lookupTimeout: slice,
   );
