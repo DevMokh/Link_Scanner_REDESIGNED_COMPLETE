@@ -1,5 +1,5 @@
 name: cobra_shield
-description: Cobra Shield - local scanner for suspicious links and phishing messages.
+description: Link Scanner (كاشف الروابط) - local scanner for suspicious links and phishing messages.
 publish_to: 'none'
 version: 1.11.1+14
 
