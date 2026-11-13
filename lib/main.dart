@@ -22,5 +22,5 @@ Future<void> main() async {
     ProgressStore.instance.load(),
     ThreatFeed.instance.load(),
   ]);
-  runApp(const CobraShieldApp());
+  runApp(const LinkScannerApp());
 }
