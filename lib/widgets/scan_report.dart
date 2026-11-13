@@ -37,11 +37,10 @@ class ScanSummaryCard extends StatelessWidget {
     final showGauge = result.hasScore;
     return Container(
       padding: const EdgeInsets.fromLTRB(18, 18, 18, 8),
-      decoration: BoxDecoration(
-        color: C.surface,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: alpha(color, 0.5)),
-        boxShadow: [BoxShadow(color: alpha(color, 0.12), blurRadius: 28)],
+      decoration: glassDecoration(
+        border: alpha(color, 0.55),
+        radius: 24,
+        glowing: true,
       ),
       child: Column(
         children: [
@@ -67,19 +66,32 @@ class ScanSummaryCard extends StatelessWidget {
             const SizedBox(height: 10),
           ],
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
             decoration: BoxDecoration(
               color: alpha(color, 0.15),
               borderRadius: BorderRadius.circular(30),
-              border: Border.all(color: alpha(color, 0.5)),
+              border: Border.all(color: alpha(color, 0.55)),
+              boxShadow: glow(color, opacity: 0.25, blur: 14),
             ),
-            child: Text(
-              tr(verdictLabelKey(result)),
-              style: TextStyle(
-                color: color,
-                fontWeight: FontWeight.w800,
-                fontSize: 15,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // الأيقونة الكبيرة فوق بتغطي حالات "مفيش درجة"، فمش بنكرّرها هنا.
+                if (showGauge) ...[
+                  Icon(_verdictIcon(verdict), color: color, size: 19),
+                  const SizedBox(width: 8),
+                ],
+                Flexible(
+                  child: Text(
+                    tr(verdictLabelKey(result)),
+                    style: TextStyle(
+                      color: color,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 10),
@@ -95,11 +107,30 @@ class ScanSummaryCard extends StatelessWidget {
             },
             icon: const Icon(Icons.copy_rounded, size: 18),
             label: Text(tr(S.copyReport)),
-            style: TextButton.styleFrom(foregroundColor: C.emerald),
+            style: TextButton.styleFrom(foregroundColor: C.accent),
           ),
         ],
       ),
     );
+  }
+}
+
+/// أيقونة الحكم. "لا مؤشرات" مش علامة صح كاملة: ما لقيناش إشارات، مش ضمان أمان.
+IconData _verdictIcon(Verdict v) {
+  switch (v) {
+    case Verdict.confirmedThreat:
+      return Icons.gpp_bad_rounded;
+    case Verdict.suspicious:
+      return Icons.warning_amber_rounded;
+    case Verdict.noIndicators:
+      return Icons.shield_outlined;
+    case Verdict.insufficient:
+    case Verdict.partialScan:
+      return Icons.rule_rounded;
+    case Verdict.invalidInput:
+      return Icons.link_off_rounded;
+    case Verdict.analysisFailed:
+      return Icons.error_outline_rounded;
   }
 }
 
@@ -119,7 +150,7 @@ class FindingTile extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14),
         child: Container(
-          color: C.surface,
+          color: alpha(C.surface2, 0.85),
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
