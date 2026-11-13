@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../core/theme.dart';
 
-/// حاوية بطاقة موحّدة بحدود خضراء وإضاءة هادئة.
+/// حاوية بطاقة موحّدة (كحلي داكن بحد أزرق هادي)
 class Panel extends StatelessWidget {
   const Panel({
     super.key,
@@ -17,25 +17,9 @@ class Panel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final edge = borderColor ?? alpha(C.line, 0.82);
     return Container(
       padding: padding,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [Color(0xFF0B1B10), C.surface, Color(0xFF040B06)],
-        ),
-        borderRadius: BorderRadius.circular(19),
-        border: Border.all(color: edge, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: alpha(borderColor ?? C.emerald, 0.075),
-            blurRadius: 16,
-            spreadRadius: 0.5,
-          ),
-        ],
-      ),
+      decoration: glassDecoration(border: borderColor),
       child: child,
     );
   }
@@ -50,28 +34,26 @@ class SectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(4, 8, 4, 11),
+      padding: const EdgeInsets.fromLTRB(4, 6, 4, 10),
       child: Row(
         children: [
           Container(
             width: 4,
-            height: 17,
+            height: 16,
             decoration: BoxDecoration(
-              color: C.emerald,
+              color: C.accent,
               borderRadius: BorderRadius.circular(4),
-              boxShadow: [
-                BoxShadow(color: alpha(C.emerald, 0.7), blurRadius: 8),
-              ],
+              boxShadow: glow(C.accent, opacity: 0.5, blur: 8),
             ),
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               text,
               style: const TextStyle(
                 color: C.text,
                 fontSize: 15,
-                fontWeight: FontWeight.w900,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -85,17 +67,20 @@ class SectionTitle extends StatelessWidget {
 InputDecoration fieldDecoration({String? hint, Widget? suffix}) {
   OutlineInputBorder border(Color c) => OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: BorderSide(color: c, width: 1.1),
+        borderSide: BorderSide(color: c),
       );
   return InputDecoration(
     hintText: hint,
     hintStyle: const TextStyle(color: C.muted, fontSize: 13),
     filled: true,
-    fillColor: const Color(0xFF030A05),
+    fillColor: alpha(C.surface2, 0.8),
     suffixIcon: suffix,
-    contentPadding: const EdgeInsets.all(15),
-    enabledBorder: border(alpha(C.line, 0.9)),
-    focusedBorder: border(C.emerald),
+    contentPadding: const EdgeInsets.all(14),
+    enabledBorder: border(alpha(C.accent, 0.35)),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(16),
+      borderSide: const BorderSide(color: C.accent, width: 1.6),
+    ),
     border: border(C.line),
   );
 }
@@ -108,17 +93,74 @@ void toast(BuildContext context, String message) {
 
 ButtonStyle outlineButtonStyle() => OutlinedButton.styleFrom(
       foregroundColor: C.text,
-      side: BorderSide(color: alpha(C.emerald, 0.55)),
+      side: BorderSide(color: alpha(C.accent, 0.45)),
       padding: const EdgeInsets.symmetric(vertical: 14),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
     );
 
 ButtonStyle filledButtonStyle() => FilledButton.styleFrom(
-      backgroundColor: C.emerald,
+      backgroundColor: C.accent,
       foregroundColor: C.onAccent,
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      textStyle: const TextStyle(fontWeight: FontWeight.w900, fontSize: 15),
-      elevation: 5,
-      shadowColor: alpha(C.emerald, 0.4),
+      elevation: 6,
+      shadowColor: alpha(C.accent, 0.55),
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      textStyle: const TextStyle(fontWeight: FontWeight.w800, fontSize: 15),
     );
+
+/// زر رئيسي كبير بتدرّج أزرق → سماوي (مثل زر "ابدأ الفحص").
+/// لو [onPressed] = null بيتعتّم ومبيستجيبش.
+class PrimaryButton extends StatelessWidget {
+  const PrimaryButton({
+    super.key,
+    required this.label,
+    required this.icon,
+    required this.onPressed,
+    this.height = 56,
+  });
+
+  final String label;
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onPressed != null;
+    return Opacity(
+      opacity: enabled ? 1 : 0.45,
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(colors: <Color>[C.accentDeep, C.accent]),
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: enabled ? glow(C.accent, opacity: 0.38, blur: 20) : null,
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(18),
+            onTap: onPressed,
+            child: SizedBox(
+              height: height,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(icon, color: C.onAccent, size: 24),
+                  const SizedBox(width: 10),
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      color: C.onAccent,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
