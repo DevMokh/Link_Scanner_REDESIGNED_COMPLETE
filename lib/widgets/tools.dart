@@ -4,6 +4,7 @@ import 'package:crypto/crypto.dart' as crypto;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../core/app_info.dart';
 import '../core/models.dart';
 import '../core/theme.dart';
 import '../services/history_store.dart';
@@ -26,7 +27,7 @@ Widget _toolTitle(IconData icon, String title, String sub) {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: C.emerald, size: 22),
+        Icon(icon, color: C.accent, size: 22),
         const SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -83,7 +84,7 @@ class _StrengthToolState extends State<StrengthTool> {
       case 2:
         return C.amber;
       default:
-        return C.emerald;
+        return C.green;
     }
   }
 
@@ -236,11 +237,11 @@ class _GeneratorToolState extends State<GeneratorTool> {
         apply(x);
         _gen();
       }),
-      selectedColor: alpha(C.emerald, 0.22),
+      selectedColor: alpha(C.accent, 0.22),
       backgroundColor: C.surface2,
-      checkmarkColor: C.emerald,
+      checkmarkColor: C.accent,
       side: const BorderSide(color: C.line),
-      labelStyle: TextStyle(color: v ? C.emerald : C.muted, fontSize: 13),
+      labelStyle: TextStyle(color: v ? C.accent : C.muted, fontSize: 13),
     );
   }
 
@@ -268,7 +269,7 @@ class _GeneratorToolState extends State<GeneratorTool> {
                 _pw,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  color: C.emerald,
+                  color: C.accent,
                   fontFamily: 'monospace',
                   fontSize: 18,
                   fontWeight: FontWeight.w700,
@@ -290,7 +291,7 @@ class _GeneratorToolState extends State<GeneratorTool> {
                   min: 8,
                   max: 40,
                   divisions: 32,
-                  activeColor: C.emerald,
+                  activeColor: C.accent,
                   inactiveColor: C.line,
                   onChanged: (v) => setState(() {
                     _len = v;
@@ -451,7 +452,7 @@ class _CleanerToolState extends State<CleanerTool> {
                   child: SelectableText(
                     r.cleaned,
                     style: const TextStyle(
-                      color: C.emerald,
+                      color: C.accent,
                       fontFamily: 'monospace',
                       fontSize: 13,
                     ),
@@ -563,7 +564,7 @@ class _HashToolState extends State<HashTool> {
                         Text(
                           e.key,
                           style: const TextStyle(
-                            color: C.emerald,
+                            color: C.accent,
                             fontWeight: FontWeight.w800,
                             fontSize: 13,
                           ),
@@ -659,7 +660,7 @@ class SettingsPanel extends StatelessWidget {
                   tr(S.languageHint),
                   style: const TextStyle(color: C.muted, fontSize: 12, height: 1.4),
                 ),
-                secondary: const Icon(Icons.language_rounded, color: C.emerald),
+                secondary: const Icon(Icons.language_rounded, color: C.accent),
               ),
               const Divider(color: C.line),
               SwitchListTile(
@@ -704,7 +705,7 @@ class SettingsPanel extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               const Text(
-                'Link Scanner - كل البيانات تبقى على جهازك.',
+                '$kAppName $kAppVersion - كل البيانات تبقى على جهازك.',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: C.muted, fontSize: 11.5),
               ),
