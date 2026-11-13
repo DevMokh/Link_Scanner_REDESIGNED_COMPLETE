@@ -175,7 +175,7 @@ class _ImageScanScreenState extends State<ImageScanScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.image_search_rounded, color: C.emerald, size: 22),
+                      const Icon(Icons.image_search_rounded, color: C.accent, size: 22),
                       const SizedBox(width: 10),
                       const Expanded(
                         child: Text(
@@ -223,7 +223,7 @@ class _ImageScanScreenState extends State<ImageScanScreen> {
                         SizedBox(
                           width: 16,
                           height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: C.emerald),
+                          child: CircularProgressIndicator(strokeWidth: 2, color: C.accent),
                         ),
                         SizedBox(width: 10),
                         Text('جارٍ قراءة النص...', style: TextStyle(color: C.muted, fontSize: 12.5)),
@@ -241,11 +241,11 @@ class _ImageScanScreenState extends State<ImageScanScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  FilledButton.icon(
+                  PrimaryButton(
                     onPressed: _scan,
-                    style: filledButtonStyle(),
-                    icon: const Icon(Icons.radar_rounded),
-                    label: const Text('افحص النص'),
+                    icon: Icons.radar_rounded,
+                    label: 'افحص النص',
+                    height: 50,
                   ),
                   const SizedBox(height: 8),
                   const Text(
