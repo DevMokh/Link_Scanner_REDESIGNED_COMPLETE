@@ -6,7 +6,7 @@ import '../core/theme.dart';
 import '../services/history_store.dart';
 import '../services/strings.dart';
 import '../widgets/common.dart';
-import '../widgets/scale_header.dart';
+import '../widgets/app_header.dart';
 import '../widgets/stats_card.dart';
 
 class HistoryScreen extends StatelessWidget {
@@ -38,7 +38,7 @@ class HistoryScreen extends StatelessWidget {
   }
 
   Future<void> _export(List<HistoryItem> items) async {
-    final b = StringBuffer('سجل فحوصات Link Scanner\n\n');
+    final b = StringBuffer('سجل فحوصات كاشف الروابط | Link Scanner\n\n');
     for (final it in items) {
       b.writeln(
         '${fmtTime(it.time)} - ${it.kind == ScanKind.url ? 'رابط' : 'رسالة'} - '
@@ -47,7 +47,7 @@ class HistoryScreen extends StatelessWidget {
     }
     b.writeln('\nملاحظة: الدرجات تقديرية محليًا ولا تغني عن الحذر.');
     await SharePlus.instance.share(
-      ShareParams(text: b.toString(), subject: 'سجل فحوصات Link Scanner'),
+      ShareParams(text: b.toString(), subject: 'سجل فحوصات كاشف الروابط'),
     );
   }
 
@@ -60,7 +60,7 @@ class HistoryScreen extends StatelessWidget {
         return ListView(
           padding: EdgeInsets.zero,
           children: [
-            ScaleHeader(
+            AppHeader(
               title: tr(S.historyTitle),
               subtitle: tr(S.historySubtitle),
               icon: Icons.history_rounded,
@@ -96,7 +96,7 @@ class HistoryScreen extends StatelessWidget {
                             onPressed: () => _export(items),
                             icon: const Icon(Icons.ios_share_rounded, size: 18),
                             label: const Text('تصدير'),
-                            style: TextButton.styleFrom(foregroundColor: C.emerald),
+                            style: TextButton.styleFrom(foregroundColor: C.accent),
                           ),
                           TextButton.icon(
                             onPressed: () => _confirmClear(context),
