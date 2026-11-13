@@ -2,32 +2,76 @@ import 'package:flutter/material.dart';
 
 import 'models.dart';
 
-/// الهوية البصرية لكاشف الروابط: أسود عميق وأخضر نيون.
+/// ألوان كاشف الروابط | Link Scanner: كحلي ليلي + أزرق سماوي (Accent).
+/// الأخضر للأمان/النجاح فقط، والأحمر والبرتقالي والأصفر لمستويات الخطر.
 class C {
   C._();
 
-  static const Color bg = Color(0xFF020704);
-  static const Color surface = Color(0xFF07130B);
-  static const Color surface2 = Color(0xFF0B1D11);
-  static const Color line = Color(0xFF087A35);
-  static const Color emerald = Color(0xFF00F566);
-  static const Color emeraldSoft = Color(0xFF14C968);
-  static const Color lime = Color(0xFF8CFF4A);
+  static const Color bg = Color(0xFF060D1C);
+  static const Color surface = Color(0xFF0C1830);
+  static const Color surface2 = Color(0xFF112247);
+  static const Color line = Color(0xFF1D3266);
+
+  /// لون الهوية الأساسي (أزرق سماوي).
+  static const Color accent = Color(0xFF31D0FF);
+
+  /// الأزرق الأعمق للتدرجات (بداية تدرّج الأزرار والبطاقات).
+  static const Color accentDeep = Color(0xFF2F7BFF);
+
+  /// الأخضر: "لا مؤشرات" / نجاح فقط.
+  static const Color green = Color(0xFF3DDC84);
   static const Color amber = Color(0xFFFFC857);
   static const Color orange = Color(0xFFFF8A3D);
-  static const Color red = Color(0xFFFF354D);
-  static const Color text = Color(0xFFF0FFF4);
-  static const Color muted = Color(0xFF9AB6A2);
-  static const Color onAccent = Color(0xFF001B09);
+  static const Color red = Color(0xFFFF5A6A);
+  static const Color text = Color(0xFFEAF3FF);
+  static const Color muted = Color(0xFF8AA0CF);
+
+  /// لون النص فوق الأزرار الفاتحة.
+  static const Color onAccent = Color(0xFF04122B);
 }
 
 /// لون بشفافية (بدون withOpacity لتفادي اختلاف نسخ Flutter)
 Color alpha(Color c, double o) => c.withAlpha((o * 255).round());
 
+/// توهج خفيف حوالين العناصر المهمة فقط (الشدة بتتقلّل تلقائيًا عشان الشكل يفضل هادي).
+List<BoxShadow> glow(
+  Color c, {
+  double opacity = 0.25,
+  double blur = 24,
+  double spread = 0,
+}) {
+  return <BoxShadow>[
+    BoxShadow(
+      color: alpha(c, opacity * 0.6),
+      blurRadius: blur,
+      spreadRadius: spread,
+    ),
+  ];
+}
+
+/// خلفية بطاقة: كحلي داكن بتدرّج خفيف + حد أزرق هادي (بدون ظلال ثقيلة).
+BoxDecoration glassDecoration({
+  Color? border,
+  double radius = 20,
+  bool glowing = false,
+}) {
+  final edge = border ?? C.line;
+  return BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      colors: <Color>[alpha(C.surface2, 0.95), alpha(C.surface, 0.98)],
+    ),
+    borderRadius: BorderRadius.circular(radius),
+    border: Border.all(color: edge),
+    boxShadow: glowing ? glow(border ?? C.accent, opacity: 0.14, blur: 20) : null,
+  );
+}
+
 Color levelColor(RiskLevel l) {
   switch (l) {
     case RiskLevel.low:
-      return C.emerald;
+      return C.green;
     case RiskLevel.medium:
       return C.amber;
     case RiskLevel.high:
@@ -40,7 +84,7 @@ Color levelColor(RiskLevel l) {
 Color severityColor(Severity s) {
   switch (s) {
     case Severity.good:
-      return C.emerald;
+      return C.green;
     case Severity.info:
       return C.muted;
     case Severity.warn:
@@ -70,99 +114,93 @@ String fmtTime(DateTime t) {
 
 ThemeData buildTheme() {
   final base = ColorScheme.fromSeed(
-    seedColor: C.emerald,
+    seedColor: C.accent,
     brightness: Brightness.dark,
   );
   final scheme = base.copyWith(
-    primary: C.emerald,
+    primary: C.accent,
     onPrimary: C.onAccent,
-    secondary: C.lime,
+    secondary: C.amber,
     surface: C.surface,
     onSurface: C.text,
     error: C.red,
-  );
-  final rounded = RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(16),
+    // أسطح Material 3 (الحوارات والقوائم والحقول) بنفس الزجاج الداكن بدل التدرّج المولّد من اللون.
+    surfaceContainerLowest: C.bg,
+    surfaceContainerLow: C.surface,
+    surfaceContainer: C.surface,
+    surfaceContainerHigh: C.surface2,
+    surfaceContainerHighest: C.surface2,
+    outline: C.line,
+    outlineVariant: C.line,
   );
   return ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: scheme,
     scaffoldBackgroundColor: C.bg,
-    appBarTheme: const AppBarThemeData(
+    appBarTheme: const AppBarTheme(
       backgroundColor: C.bg,
       foregroundColor: C.text,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
-      centerTitle: true,
     ),
-    cardTheme: CardThemeData(
-      color: C.surface,
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: C.bg,
       surfaceTintColor: Colors.transparent,
-      elevation: 0,
-      shape: rounded.copyWith(
-        side: const BorderSide(color: C.line, width: 1),
-      ),
-      margin: EdgeInsets.zero,
-    ),
-    dividerColor: alpha(C.emerald, 0.22),
-    iconTheme: const IconThemeData(color: C.emerald),
-    textTheme: const TextTheme(
-      titleLarge: TextStyle(color: C.text, fontWeight: FontWeight.w900),
-      titleMedium: TextStyle(color: C.text, fontWeight: FontWeight.w800),
-      bodyLarge: TextStyle(color: C.text),
-      bodyMedium: TextStyle(color: C.text),
-      bodySmall: TextStyle(color: C.muted),
     ),
     navigationBarTheme: NavigationBarThemeData(
-      backgroundColor: const Color(0xFF030A05),
-      indicatorColor: alpha(C.emerald, 0.18),
+      backgroundColor: C.bg,
+      indicatorColor: alpha(C.accent, 0.16),
       surfaceTintColor: Colors.transparent,
       height: 70,
-      elevation: 0,
-      labelTextStyle: WidgetStateProperty.resolveWith((states) {
-        final selected = states.contains(WidgetState.selected);
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+      iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((states) {
+        final on = states.contains(WidgetState.selected);
+        return IconThemeData(color: on ? C.accent : C.muted, size: 24);
+      }),
+      labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+        final on = states.contains(WidgetState.selected);
         return TextStyle(
-          color: selected ? C.emerald : C.muted,
-          fontSize: 11,
-          fontWeight: selected ? FontWeight.w900 : FontWeight.w600,
+          color: on ? C.accent : C.muted,
+          fontSize: 12,
+          fontWeight: on ? FontWeight.w800 : FontWeight.w500,
         );
       }),
-      iconTheme: WidgetStateProperty.resolveWith((states) => IconThemeData(
-            color: states.contains(WidgetState.selected) ? C.emerald : C.muted,
-          )),
     ),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
+        return states.contains(WidgetState.selected) ? C.onAccent : C.muted;
+      }),
+      trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+        return states.contains(WidgetState.selected) ? C.accent : C.surface2;
+      }),
+      trackOutlineColor: WidgetStateProperty.resolveWith<Color>((states) {
+        return states.contains(WidgetState.selected) ? C.accent : C.line;
+      }),
+    ),
+    sliderTheme: SliderThemeData(
+      activeTrackColor: C.accent,
+      inactiveTrackColor: C.line,
+      thumbColor: C.accent,
+      overlayColor: alpha(C.accent, 0.16),
+    ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: C.accent,
+      linearTrackColor: C.surface2,
+    ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: C.accent,
+      selectionHandleColor: C.accent,
+      selectionColor: alpha(C.accent, 0.3),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: C.accent),
+    ),
+    dividerTheme: const DividerThemeData(color: C.line, space: 1),
     snackBarTheme: const SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
       backgroundColor: C.surface2,
       contentTextStyle: TextStyle(color: C.text),
-    ),
-    dialogTheme: DialogThemeData(
-      backgroundColor: C.surface2,
-      surfaceTintColor: Colors.transparent,
-      shape: rounded.copyWith(
-        side: BorderSide(color: alpha(C.emerald, 0.45)),
-      ),
-    ),
-    drawerTheme: const DrawerThemeData(
-      backgroundColor: C.surface,
-      surfaceTintColor: Colors.transparent,
-      width: 310,
-    ),
-    filledButtonTheme: FilledButtonThemeData(
-      style: FilledButton.styleFrom(
-        backgroundColor: C.emerald,
-        foregroundColor: C.onAccent,
-        textStyle: const TextStyle(fontWeight: FontWeight.w900),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      ),
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        foregroundColor: C.text,
-        side: const BorderSide(color: C.line),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      ),
     ),
   );
 }
